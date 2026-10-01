@@ -103,6 +103,9 @@ body.inner .back{display:inline-block}
 .reader-head h2{font-family:"Amiri",serif;font-size:2rem;margin:0;color:var(--accent)}
 .reader-head small{color:var(--muted)}
 audio{width:100%;margin:10px 0 4px}
+.reciters{display:flex;gap:8px;margin-top:12px}
+.reciters button{flex:1;padding:10px 6px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:.9rem;line-height:1.4}
+.reciters button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
 .reciter{text-align:center;color:var(--muted);font-size:.85rem}
 .basmala{text-align:center;font-family:"Amiri Quran","Amiri",serif;font-size:calc(1.5rem*var(--fs));margin:14px 0}
 .mushaf{
@@ -201,6 +204,7 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
   <!-- READER -->
   <section class="view" id="v-reader">
     <div class="reader-head"><h2 id="rName"></h2><small id="rMeta"></small></div>
+    <div class="reciters" id="reciters"></div>
     <audio id="audio" controls preload="none"></audio>
     <div class="reciter" id="reciter"></div>
     <div id="rBody"></div>
@@ -403,10 +407,8 @@ function openSurah(n){
   $("#rName").textContent = s.name;
   $("#title").textContent = s.name;
   $("#rMeta").textContent = `${toAr(s.ayahs.length)} آية · ${s.meccan ? "مكية" : "مدنية"}`;
-  const audio = $("#audio");
-  audio.pause();
-  audio.src = `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${n}.mp3`;
-  $("#reciter").textContent = "التلاوة بصوت الشيخ مشاري العفاسي";
+  $("#audio").pause();
+  setAudio(n);
   const text = s.ayahs.map(a => stripBasmala(a.text, n, a.numberInSurah) + ` <span class="an">﴿${toAr(a.numberInSurah)}﴾</span>`).join(" ");
   $("#rBody").innerHTML = (n !== 1 && n !== 9 ? `<div class="basmala">${BASMALA}</div>` : "") + `<div class="mushaf">${text}</div>`;
   store.set("lastSurah", {n, name: s.name});
@@ -455,6 +457,28 @@ function openHisn(i){
 }
 $("#hNext").onclick = () => curH < HISN.length - 1 && openHisn(curH + 1);
 $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
+
+/* ---------- reciters ---------- */
+const BINHUMAID_MISSING = [9,14,16,17,23,24,33];
+const RECITERS = {
+  alafasy:  { name:"مشاري العفاسي", url: n => `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${n}.mp3`, has: n => true },
+  binhumaid:{ name:"أحمد بن طالب بن حميد", url: n => `https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/${String(n).padStart(3,"0")}.mp3`, has: n => !BINHUMAID_MISSING.includes(n) },
+};
+let reciter = store.get("reciter", "alafasy");
+if (!RECITERS[reciter]) reciter = "alafasy";
+function setAudio(n){
+  const audio = $("#audio");
+  const wasPlaying = !audio.paused;
+  audio.pause();
+  let r = reciter, note = "";
+  if (!RECITERS[r].has(n)){ note = ` (هذه السورة غير متوفرة بصوت الشيخ ${RECITERS[r].name}، فتُشغَّل بصوت الشيخ مشاري العفاسي)`; r = "alafasy"; }
+  audio.src = RECITERS[r].url(n);
+  $("#reciter").textContent = "التلاوة بصوت الشيخ " + RECITERS[r].name + note;
+  const box = $("#reciters");
+  box.innerHTML = Object.entries(RECITERS).map(([k,v]) => `<button data-r="${k}" class="${k===reciter?"on":""}">${v.name}</button>`).join("");
+  box.querySelectorAll("button").forEach(b => b.onclick = () => { reciter = b.dataset.r; store.set("reciter", reciter); setAudio(curSurah); });
+  if (wasPlaying) audio.play().catch(()=>{});
+}
 
 /* ---------- navigation ---------- */
 const TITLES = {home:"أذكار وقرآن", morning:"أذكار الصباح", evening:"أذكار المساء", quran:"القرآن الكريم", hisn:"حصن المسلم"};
