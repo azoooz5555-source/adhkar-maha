@@ -486,7 +486,7 @@ $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
 const RECITERS = {
   alafasy:  { name:"مشاري العفاسي", url: n => `https://server8.mp3quran.net/afs/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/${String(n).padStart(3,"0")}.mp3`, has: n => true },
-  basit:    { name:"عبدالباسط عبدالصمد", url: n => `https://server7.mp3quran.net/basit/${String(n).padStart(3,"0")}.mp3`, has: n => true },
+  basit:    { name:"عبدالباسط عبدالصمد", url: n => `https://download.quranicaudio.com/qdc/abdul_baset/murattal/${n}.mp3`, has: n => true },
 };
 let reciter = store.get("reciter", "alafasy");
 let playing = reciter;

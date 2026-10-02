@@ -7,7 +7,10 @@ import os
 import time
 import urllib.request
 
-READS = {"alafasy": 123, "minshawi": 112, "basit": 53}
+READS = {"alafasy": 123, "minshawi": 112}
+# Quran.com (QuranicAudio) recitations: key -> recitation id. Audio files are the ones that match these timings.
+QDC = {"basit": 2}
+QDC_API = "https://api.qurancdn.com/api/qdc/audio/reciters/{r}/audio_files?chapter={s}&segments=true"
 API = "https://mp3quran.net/api/v3/ayat_timing?surah={s}&read={r}"
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "timing")
 os.makedirs(OUT, exist_ok=True)
@@ -35,3 +38,25 @@ for key, rid in READS.items():
     with open(os.path.join(OUT, f"{key}.json"), "w", encoding="utf-8") as f:
         json.dump(data, f, separators=(",", ":"))
     print(key, "surahs with timing:", len(data))
+
+
+for key, rid in QDC.items():
+    data, urls = {}, {}
+    for s in range(1, 115):
+        j = get(QDC_API.format(s=s, r=rid))
+        files = (j or {}).get("audio_files") or []
+        if files:
+            f0 = files[0]
+            urls[str(s)] = f0.get("audio_url")
+            rows = []
+            for t in f0.get("verse_timings") or []:
+                a = int(str(t["verse_key"]).split(":")[1])
+                rows.append([a, int(t["timestamp_from"]), int(t["timestamp_to"])])
+            if rows:
+                data[str(s)] = rows
+        time.sleep(0.2)
+    with open(os.path.join(OUT, f"{key}.json"), "w", encoding="utf-8") as f:
+        json.dump(data, f, separators=(",", ":"))
+    with open(os.path.join(OUT, f"{key}_urls.json"), "w", encoding="utf-8") as f:
+        json.dump(urls, f, separators=(",", ":"))
+    print(key, "surahs with timing:", len(data), "urls:", len(urls), "sample:", urls.get("1"))
