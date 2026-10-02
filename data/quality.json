@@ -1,0 +1,187 @@
+{
+ "alafasy": [
+  {
+   "surah": 1,
+   "bytes": 837734,
+   "seconds": 51,
+   "kbps": 131,
+   "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/001.mp3"
+  },
+  {
+   "surah": 18,
+   "bytes": 31938492,
+   "seconds": 1994,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/018.mp3"
+  },
+  {
+   "surah": 36,
+   "bytes": 16963851,
+   "seconds": 1058,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/036.mp3"
+  },
+  {
+   "surah": 67,
+   "bytes": 7293947,
+   "seconds": 451,
+   "kbps": 129,
+   "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/067.mp3"
+  },
+  {
+   "surah": 112,
+   "bytes": 354155,
+   "seconds": 21,
+   "kbps": 137,
+   "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/112.mp3"
+  }
+ ],
+ "minshawi": [
+  {
+   "surah": 1,
+   "bytes": 840426,
+   "seconds": 51,
+   "kbps": 132,
+   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/001.mp3"
+  },
+  {
+   "surah": 18,
+   "bytes": 33646454,
+   "seconds": 2096,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/018.mp3"
+  },
+  {
+   "surah": 36,
+   "bytes": 15251650,
+   "seconds": 952,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/036.mp3"
+  },
+  {
+   "surah": 67,
+   "bytes": 6673458,
+   "seconds": 415,
+   "kbps": 129,
+   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/067.mp3"
+  },
+  {
+   "surah": 112,
+   "bytes": 311705,
+   "seconds": 19,
+   "kbps": 133,
+   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/112.mp3"
+  }
+ ],
+ "basit": [
+  {
+   "surah": 1,
+   "bytes": 1600683,
+   "seconds": 98,
+   "kbps": 131,
+   "url": "https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/001.mp3"
+  },
+  {
+   "surah": 18,
+   "bytes": 67264573,
+   "seconds": 4196,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/018.mp3"
+  },
+  {
+   "surah": 36,
+   "bytes": 33757619,
+   "seconds": 2107,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/036.mp3"
+  },
+  {
+   "surah": 67,
+   "bytes": 13662561,
+   "seconds": 851,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/067.mp3"
+  },
+  {
+   "surah": 112,
+   "bytes": 671558,
+   "seconds": 39,
+   "kbps": 139,
+   "url": "https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/112.mp3"
+  }
+ ],
+ "qatami": [
+  {
+   "surah": 1,
+   "bytes": 483656,
+   "seconds": 39,
+   "kbps": 100,
+   "url": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/001.mp3"
+  },
+  {
+   "surah": 18,
+   "bytes": 22174167,
+   "seconds": 1843,
+   "kbps": 96,
+   "url": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/018.mp3"
+  },
+  {
+   "surah": 36,
+   "bytes": 11608368,
+   "seconds": 963,
+   "kbps": 96,
+   "url": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/036.mp3"
+  },
+  {
+   "surah": 67,
+   "bytes": 4919245,
+   "seconds": 399,
+   "kbps": 99,
+   "url": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/067.mp3"
+  },
+  {
+   "surah": 112,
+   "bytes": 181992,
+   "seconds": 11,
+   "kbps": 138,
+   "url": "https://cdn.mp3quran.net/audio/nasser-qatami/r1/112.mp3"
+  }
+ ],
+ "husary": [
+  {
+   "surah": 1,
+   "bytes": 935074,
+   "seconds": 54,
+   "kbps": 138,
+   "url": "https://cdn.mp3quran.net/audio/mahmoud-husary/r1/001.mp3"
+  },
+  {
+   "surah": 18,
+   "bytes": 45935480,
+   "seconds": 2867,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/mahmoud-husary/r1/018.mp3"
+  },
+  {
+   "surah": 36,
+   "bytes": 22915958,
+   "seconds": 1428,
+   "kbps": 128,
+   "url": "https://cdn.mp3quran.net/audio/mahmoud-husary/r1/036.mp3"
+  },
+  {
+   "surah": 67,
+   "bytes": 10795979,
+   "seconds": 669,
+   "kbps": 129,
+   "url": "https://cdn.mp3quran.net/audio/mahmoud-husary/r1/067.mp3"
+  },
+  {
+   "surah": 112,
+   "bytes": 581061,
+   "seconds": 33,
+   "kbps": 142,
+   "url": "https://cdn.mp3quran.net/audio/mahmoud-husary/r1/112.mp3"
+  }
+ ]
+}
