@@ -112,6 +112,9 @@ audio{width:100%;margin:10px 0 4px}
   font-family:"Amiri Quran","Amiri",serif;font-size:calc(1.55rem*var(--fs));line-height:2.6;text-align:justify;
   background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)
 }
+.ay{border-radius:8px;transition:background .25s,color .25s;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 2px}
+.ay.cur{background:color-mix(in srgb, var(--gold) 28%, transparent);color:var(--ink)}
+.hint{text-align:center;color:var(--muted);font-size:.8rem;margin-top:2px}
 .mushaf .an{color:var(--gold);font-size:.85em;white-space:nowrap}
 .nav2{display:flex;gap:10px;margin-top:14px}
 .nav2 button{flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
@@ -207,6 +210,7 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
     <div class="reciters" id="reciters"></div>
     <audio id="audio" controls preload="none"></audio>
     <div class="reciter" id="reciter"></div>
+    <div class="hint">اضغطي على أي آية ليبدأ القارئ منها، والآية المقروءة تتلوّن تلقائياً</div>
     <div id="rBody"></div>
     <div class="nav2"><button id="nextS">السورة التالية ←</button><button id="prevS">→ السورة السابقة</button></div>
   </section>
@@ -409,12 +413,32 @@ function openSurah(n){
   $("#rMeta").textContent = `${toAr(s.ayahs.length)} آية · ${s.meccan ? "مكية" : "مدنية"}`;
   $("#audio").pause();
   setAudio(n);
-  const text = s.ayahs.map(a => stripBasmala(a.text, n, a.numberInSurah) + ` <span class="an">﴿${toAr(a.numberInSurah)}﴾</span>`).join(" ");
+  const text = s.ayahs.map(a => `<span class="ay" data-a="${a.numberInSurah}">${stripBasmala(a.text, n, a.numberInSurah)} <span class="an">﴿${toAr(a.numberInSurah)}﴾</span></span>`).join(" ");
+  lastAyah = 0;
   $("#rBody").innerHTML = (n !== 1 && n !== 9 ? `<div class="basmala">${BASMALA}</div>` : "") + `<div class="mushaf">${text}</div>`;
   store.set("lastSurah", {n, name: s.name});
   $("#prevS").disabled = n === 1; $("#nextS").disabled = n === 114;
   window.scrollTo({top:0});
 }
+$("#audio").addEventListener("timeupdate", () => {
+  const tm = curTiming(); if (!tm) return;
+  const t = $("#audio").currentTime * 1000;
+  const row = tm.find(x => t >= x[1] && t < x[2]);
+  if (row) markAyah(row[0]);
+});
+$("#audio").addEventListener("ended", () => {
+  markAyah(0);
+  if (store.get("autoNext", true) && curSurah < 114){ openSurah(curSurah + 1); $("#audio").play().catch(()=>{}); }
+});
+$("#rBody").addEventListener("click", e => {
+  const ay = e.target.closest(".ay"); if (!ay) return;
+  const tm = curTiming(); if (!tm) return;
+  const row = tm.find(x => x[0] === +ay.dataset.a); if (!row) return;
+  const audio = $("#audio");
+  audio.currentTime = row[1] / 1000;
+  audio.play().catch(()=>{});
+  markAyah(row[0]);
+});
 $("#nextS").onclick = () => curSurah < 114 && openSurah(curSurah + 1);
 $("#prevS").onclick = () => curSurah > 1 && openSurah(curSurah - 1);
 
@@ -461,11 +485,35 @@ $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
 /* ---------- reciters ---------- */
 const BINHUMAID_MISSING = [9,14,16,17,23,24,33];
 const RECITERS = {
-  alafasy:  { name:"مشاري العفاسي", url: n => `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${n}.mp3`, has: n => true },
+  alafasy:  { name:"مشاري العفاسي", url: n => `https://server8.mp3quran.net/afs/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   binhumaid:{ name:"أحمد بن طالب بن حميد", url: n => `https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/${String(n).padStart(3,"0")}.mp3`, has: n => !BINHUMAID_MISSING.includes(n) },
 };
 let reciter = store.get("reciter", "alafasy");
+let playing = reciter;
+
+/* ---------- follow-along (ayah highlighting) ---------- */
+const timingCache = {};
+function loadTiming(key){
+  if (timingCache[key]) return;
+  timingCache[key] = fetch(`data/timing/${key}.json`).then(r => r.ok ? r.json() : null).then(d => { timingCache[key] = d || {}; }).catch(() => { timingCache[key] = {}; });
+}
+function curTiming(){
+  const t = timingCache[playing];
+  return (t && !(t instanceof Promise)) ? (t[String(curSurah)] || null) : null;
+}
+let lastAyah = 0;
+function markAyah(a){
+  if (a === lastAyah) return;
+  const prev = document.querySelector(".ay.cur"); if (prev) prev.classList.remove("cur");
+  lastAyah = a;
+  if (!a) return;
+  const el = document.querySelector(`.ay[data-a="${a}"]`);
+  if (!el) return;
+  el.classList.add("cur");
+  const r = el.getBoundingClientRect(), vh = window.innerHeight;
+  if (r.top < 90 || r.bottom > vh - 110) el.scrollIntoView({behavior:"smooth", block:"center"});
+}
 if (!RECITERS[reciter]) reciter = "alafasy";
 function setAudio(n){
   const audio = $("#audio");
@@ -474,6 +522,7 @@ function setAudio(n){
   let r = reciter, note = "";
   if (!RECITERS[r].has(n)){ note = ` (هذه السورة غير متوفرة بصوت الشيخ ${RECITERS[r].name}، فتُشغَّل بصوت الشيخ مشاري العفاسي)`; r = "alafasy"; }
   audio.src = RECITERS[r].url(n);
+  playing = r; loadTiming(r);
   $("#reciter").textContent = "التلاوة بصوت الشيخ " + RECITERS[r].name + note;
   const box = $("#reciters");
   box.innerHTML = Object.entries(RECITERS).map(([k,v]) => `<button data-r="${k}" class="${k===reciter?"on":""}">${v.name}</button>`).join("");
