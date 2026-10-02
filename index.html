@@ -483,11 +483,10 @@ $("#hNext").onclick = () => curH < HISN.length - 1 && openHisn(curH + 1);
 $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
 
 /* ---------- reciters ---------- */
-const BINHUMAID_MISSING = [9,14,16,17,23,24,33];
 const RECITERS = {
   alafasy:  { name:"مشاري العفاسي", url: n => `https://server8.mp3quran.net/afs/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/${String(n).padStart(3,"0")}.mp3`, has: n => true },
-  binhumaid:{ name:"أحمد بن طالب بن حميد", url: n => `https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/${String(n).padStart(3,"0")}.mp3`, has: n => !BINHUMAID_MISSING.includes(n) },
+  basit:    { name:"عبدالباسط عبدالصمد", url: n => `https://server7.mp3quran.net/basit/${String(n).padStart(3,"0")}.mp3`, has: n => true },
 };
 let reciter = store.get("reciter", "alafasy");
 let playing = reciter;

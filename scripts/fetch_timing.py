@@ -7,7 +7,7 @@ import os
 import time
 import urllib.request
 
-READS = {"alafasy": 123, "minshawi": 112, "binhumaid": 137}
+READS = {"alafasy": 123, "minshawi": 112, "basit": 53}
 API = "https://mp3quran.net/api/v3/ayat_timing?surah={s}&read={r}"
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "timing")
 os.makedirs(OUT, exist_ok=True)
