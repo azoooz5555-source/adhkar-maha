@@ -425,6 +425,7 @@ $("#audio").addEventListener("timeupdate", () => {
   const t = $("#audio").currentTime * 1000;
   const row = tm.find(x => t >= x[1] && t < x[2]);
   if (row) markAyah(row[0]);
+  else { const last = tm[tm.length - 1]; if (t >= last[2] && last[0] < QURAN[curSurah - 1].length) markAyah(last[0] + 1); }
 });
 $("#audio").addEventListener("ended", () => {
   markAyah(0);
