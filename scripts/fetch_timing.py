@@ -7,10 +7,9 @@ import os
 import time
 import urllib.request
 
-READS = {"alafasy": 123, "minshawi": 112, "basit": 51, "qatami": 86, "husary": 118}  # basit = المصحف المجود
+READS = {"alafasy": 123, "basit": 51, "qatami": 86, "husary": 118}  # basit = المصحف المجود؛ المنشاوي (المجوّد) بلا توقيت متاح
 FOLDERS = {
     "alafasy": "https://server8.mp3quran.net/afs/",
-    "minshawi": "https://server10.mp3quran.net/minsh/",
     "basit": "https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/",
     "qatami": "https://server6.mp3quran.net/qtm/",
     "husary": "https://server13.mp3quran.net/husr/",

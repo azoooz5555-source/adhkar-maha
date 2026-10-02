@@ -485,7 +485,7 @@ $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
 /* ---------- reciters ---------- */
 const RECITERS = {
   alafasy:  { name:"مشاري العفاسي", url: n => `https://server8.mp3quran.net/afs/${String(n).padStart(3,"0")}.mp3`, has: n => true },
-  minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/${String(n).padStart(3,"0")}.mp3`, has: n => true },
+  minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad/${String(n).padStart(3,"0")}.mp3`, has: n => true, noTrack: true },
   basit:    { name:"عبدالباسط عبدالصمد", url: n => `https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   husary:   { name:"محمود خليل الحصري", url: n => `https://server13.mp3quran.net/husr/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   qatami:   { name:"ناصر القطامي", url: n => `https://server6.mp3quran.net/qtm/${String(n).padStart(3,"0")}.mp3`, has: n => true },
@@ -496,6 +496,7 @@ let playing = reciter;
 /* ---------- follow-along (ayah highlighting) ---------- */
 const timingCache = {};
 function loadTiming(key){
+  if (RECITERS[key] && RECITERS[key].noTrack){ timingCache[key] = {}; return; }
   if (timingCache[key]) return;
   timingCache[key] = fetch(`data/timing/${key}.json`).then(r => r.ok ? r.json() : null).then(d => { timingCache[key] = d || {}; }).catch(() => { timingCache[key] = {}; });
 }
@@ -541,7 +542,8 @@ function setAudio(n){
   if (!RECITERS[r].has(n)){ note = ` (هذه السورة غير متوفرة بصوت الشيخ ${RECITERS[r].name}، فتُشغَّل بصوت الشيخ مشاري العفاسي)`; r = "alafasy"; }
   audio.src = RECITERS[r].url(n);
   playing = r; loadTiming(r);
-  $("#reciter").textContent = "التلاوة بصوت الشيخ " + RECITERS[r].name + note;
+  $("#reciter").textContent = "التلاوة بصوت الشيخ " + RECITERS[r].name + (RECITERS[r].noTrack ? " (المصحف المجوّد)" : "") + note;
+  $(".hint").textContent = RECITERS[r].noTrack ? "تتبّع الآيات غير متوفر لهذا التسجيل" : "اضغطي على أي آية ليبدأ القارئ منها، والآية المقروءة تتلوّن تلقائياً";
   const box = $("#reciters");
   box.innerHTML = Object.entries(RECITERS).map(([k,v]) => `<button data-r="${k}" class="${k===reciter?"on":""}">${v.name}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.onclick = () => { reciter = b.dataset.r; store.set("reciter", reciter); setAudio(curSurah); });
