@@ -104,7 +104,7 @@ body.inner .back{display:inline-block}
 .reader-head small{color:var(--muted)}
 audio{width:100%;margin:10px 0 4px}
 .reciters{display:flex;gap:8px;margin-top:12px}
-.reciters button{flex:1;padding:10px 6px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:.9rem;line-height:1.4}
+.reciters button{flex:1;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:.85rem;line-height:1.4}
 .reciters button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
 .reciter{text-align:center;color:var(--muted);font-size:.85rem}
 .basmala{text-align:center;font-family:"Amiri Quran","Amiri",serif;font-size:calc(1.5rem*var(--fs));margin:14px 0}
@@ -462,6 +462,7 @@ $("#hPrev").onclick = () => curH > 0 && openHisn(curH - 1);
 const BINHUMAID_MISSING = [9,14,16,17,23,24,33];
 const RECITERS = {
   alafasy:  { name:"مشاري العفاسي", url: n => `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${n}.mp3`, has: n => true },
+  minshawi: { name:"محمد صديق المنشاوي", url: n => `https://server10.mp3quran.net/minsh/${String(n).padStart(3,"0")}.mp3`, has: n => true },
   binhumaid:{ name:"أحمد بن طالب بن حميد", url: n => `https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/${String(n).padStart(3,"0")}.mp3`, has: n => !BINHUMAID_MISSING.includes(n) },
 };
 let reciter = store.get("reciter", "alafasy");
