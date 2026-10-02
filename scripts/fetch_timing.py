@@ -7,9 +7,9 @@ import os
 import time
 import urllib.request
 
-READS = {"alafasy": 123, "minshawi": 112}
+READS = {"alafasy": 123, "minshawi": 112, "basit": 51}  # basit = المصحف المجود
 # Quran.com (QuranicAudio) recitations: key -> recitation id. Audio files are the ones that match these timings.
-QDC = {"basit": 2}
+QDC = {}
 QDC_API = "https://api.qurancdn.com/api/qdc/audio/reciters/{r}/audio_files?chapter={s}&segments=true"
 API = "https://mp3quran.net/api/v3/ayat_timing?surah={s}&read={r}"
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "timing")
