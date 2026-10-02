@@ -36,43 +36,6 @@
    "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/112.mp3"
   }
  ],
- "minshawi": [
-  {
-   "surah": 1,
-   "bytes": 840426,
-   "seconds": 51,
-   "kbps": 132,
-   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/001.mp3"
-  },
-  {
-   "surah": 18,
-   "bytes": 33646454,
-   "seconds": 2096,
-   "kbps": 128,
-   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/018.mp3"
-  },
-  {
-   "surah": 36,
-   "bytes": 15251650,
-   "seconds": 952,
-   "kbps": 128,
-   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/036.mp3"
-  },
-  {
-   "surah": 67,
-   "bytes": 6673458,
-   "seconds": 415,
-   "kbps": 129,
-   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/067.mp3"
-  },
-  {
-   "surah": 112,
-   "bytes": 311705,
-   "seconds": 19,
-   "kbps": 133,
-   "url": "https://cdn.mp3quran.net/audio/muhammad-minshawi/r1/112.mp3"
-  }
- ],
  "basit": [
   {
    "surah": 1,
